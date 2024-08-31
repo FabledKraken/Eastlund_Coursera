@@ -1,2 +1,1 @@
-# Eastlund_Coursera
-Github for Embedded Coursera Course
+/* Add Author and Project Details here */
