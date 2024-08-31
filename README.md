@@ -1,1 +1,2 @@
-/* Add Author and Project Details here */
+# Cole Eastlund
+Repository for Intro to Embedded Systems Coursera 
