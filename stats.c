@@ -9,17 +9,16 @@
  *
  *****************************************************************************/
 /**
- * @file <Add File Name> 
- * @brief <Add Brief Description Here >
+ * @file stats.c
+ * @brief Implementation of statistical analysis functions.
  *
- * <Add Extended Description Here>
+ * This file contains the implementations of functions that perform
+ * statistical analysis on an array of data, including functions to
+ * calculate the mean, median, maximum, minimum, and to sort the array.
  *
- * @author <Add FirsName LastName>
- * @date <Add date >
- *
+ * @author Cole Eastlund
+ * @date 8/30/2024
  */
-
-
 
 #include <stdio.h>
 #include "stats.h"
@@ -29,15 +28,147 @@
 
 void main() {
 
-  unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
-                              114, 88,   45,  76, 123,  87,  25,  23,
-                              200, 122, 150, 90,   92,  87, 177, 244,
-                              201,   6,  12,  60,   8,   2,   5,  67,
-                                7,  87, 250, 230,  99,   3, 100,  90};
+    unsigned char test[SIZE] = { 34, 201, 190, 154, 8, 194, 2, 6,
+                                 114, 88, 45, 76, 123, 87, 25, 23,
+                                 200, 122, 150, 90, 92, 87, 177, 244,
+                                 201, 6, 12, 60, 8, 2, 5, 67,
+                                 7, 87, 250, 230, 99, 3, 100, 90};
 
-  /* Other Variable Declarations Go Here */
-  /* Statistics and Printing Functions Go Here */
-
+    /* Printing statistics of the array */
+    print_statistics(test, SIZE);
 }
 
-/* Add other Implementation File Code Here */
+/**
+ * @brief Prints the statistics of an array including minimum, maximum, mean, and median.
+ *
+ * This function prints the statistical results of an array of data,
+ * including the minimum, maximum, mean, and median values.
+ *
+ * @param array The array of data to analyze.
+ * @param size The number of elements in the array.
+ *
+ * @return void
+ */
+void print_statistics(unsigned char array[], unsigned int size) {
+    printf("Minimum: %u\n", find_minimum(array, size));
+    printf("Maximum: %u\n", find_maximum(array, size));
+    printf("Mean: %u\n", find_mean(array, size));
+    printf("Median: %u\n", find_median(array, size));
+}
+
+/**
+ * @brief Prints an array of data.
+ *
+ * This function prints each element of the given array.
+ *
+ * @param array The array of data to print.
+ * @param size The number of elements in the array.
+ *
+ * @return void
+ */
+void print_array(unsigned char array[], unsigned int size) {
+    for (unsigned int i = 0; i < size; i++) {
+        printf("%u ", array[i]);
+    }
+    printf("\n");
+}
+
+/**
+ * @brief Finds the median of the data set.
+ *
+ * This function calculates and returns the median value of the array.
+ * The array is sorted before calculating the median.
+ *
+ * @param array The array of data to analyze.
+ * @param size The number of elements in the array.
+ *
+ * @return unsigned char The median of the data set.
+ */
+unsigned char find_median(unsigned char array[], unsigned int size) {
+    sort_array(array, size);
+    if (size % 2 == 0) {
+        return (array[size / 2 - 1] + array[size / 2]) / 2;
+    } else {
+        return array[size / 2];
+    }
+}
+
+/**
+ * @brief Finds the mean of the data set.
+ *
+ * This function calculates and returns the mean value of the array.
+ *
+ * @param array The array of data to analyze.
+ * @param size The number of elements in the array.
+ *
+ * @return unsigned char The mean of the data set.
+ */
+unsigned char find_mean(unsigned char array[], unsigned int size) {
+    unsigned int sum = 0;
+    for (unsigned int i = 0; i < size; i++) {
+        sum += array[i];
+    }
+    return sum / size;
+}
+
+/**
+ * @brief Finds the maximum of the data set.
+ *
+ * This function finds and returns the maximum value in the array.
+ *
+ * @param array The array of data to analyze.
+ * @param size The number of elements in the array.
+ *
+ * @return unsigned char The maximum of the data set.
+ */
+unsigned char find_maximum(unsigned char array[], unsigned int size) {
+    unsigned char max = array[0];
+    for (unsigned int i = 1; i < size; i++) {
+        if (array[i] > max) {
+            max = array[i];
+        }
+    }
+    return max;
+}
+
+/**
+ * @brief Finds the minimum of the data set.
+ *
+ * This function finds and returns the minimum value in the array.
+ *
+ * @param array The array of data to analyze.
+ * @param size The number of elements in the array.
+ *
+ * @return unsigned char The minimum of the data set.
+ */
+unsigned char find_minimum(unsigned char array[], unsigned int size) {
+    unsigned char min = array[0];
+    for (unsigned int i = 1; i < size; i++) {
+        if (array[i] < min) {
+            min = array[i];
+        }
+    }
+    return min;
+}
+
+/**
+ * @brief Sorts the array from largest to smallest.
+ *
+ * This function sorts the given array in descending order.
+ *
+ * @param array The array of data to sort.
+ * @param size The number of elements in the array.
+ *
+ * @return void
+ */
+void sort_array(unsigned char array[], unsigned int size) {
+    for (unsigned int i = 0; i < size - 1; i++) {
+        for (unsigned int j = i + 1; j < size; j++) {
+            if (array[i] < array[j]) {
+                unsigned char temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+    }
+}
